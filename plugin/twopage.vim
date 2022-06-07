@@ -13,7 +13,7 @@ function! EnableTwoPage()
     call s:TwoPageSyncWindows()
 
     " Set up autocommand
-    silent! augroup
+    augroup TwoPage
       autocmd!
       autocmd CursorMoved * :call s:TwoPageHandleMove()
       exe 'autocmd WinClosed ' . b:left_winid . ' :call DisableTwoPage()'
@@ -32,7 +32,7 @@ endfunction
 function! DisableTwoPage()
 
   " Remove autocommand
-  silent! augroup
+  augroup TwoPage
     autocmd!
   augroup end
 
