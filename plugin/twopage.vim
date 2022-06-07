@@ -17,21 +17,29 @@ endfunction
 
 function! EnableTwoPage()
 
-  " Initialize windows
-  vsplit
-  let b:left_winid = win_getid()
-  let b:right_winid = win_getid(winnr('1l'))
-  call TwoPageSyncWindows()
+  if (line('$') <= line('w$'))
 
-  " Set up autocommand
-  silent! augroup
-    autocmd!
-    autocmd CursorMoved * :call s:TwoPageHandleMove()
-  augroup end
+    echom "No point in enabling two page editing for a small document"
 
-  let b:two_page_enable = 1
+  else
 
-  echom "Two page editing enabled"
+    " Initialize windows
+    vsplit
+    let b:left_winid = win_getid()
+    let b:right_winid = win_getid(winnr('1l'))
+    call s:TwoPageSyncWindows()
+
+    " Set up autocommand
+    silent! augroup
+      autocmd!
+      autocmd CursorMoved * :call s:TwoPageHandleMove()
+    augroup end
+
+    let b:two_page_enable = 1
+
+    echom "Two page editing enabled"
+
+  end
 
 endfunction
 
