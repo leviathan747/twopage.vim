@@ -1,20 +1,3 @@
-function Compliment()
-  echom 'Hello ' . $USER . ' you handsome devil 😏'
-endfunction
-
-function! DisableTwoPage()
-
-  " Remove autocommand
-  silent! augroup
-    autocmd!
-  augroup end
-
-  let b:two_page_enable = 0
-
-  echom "Two page editing disabled"
-
-endfunction
-
 function! EnableTwoPage()
 
   if (line('$') <= line('w$'))
@@ -45,6 +28,21 @@ function! EnableTwoPage()
 
 endfunction
 
+
+function! DisableTwoPage()
+
+  " Remove autocommand
+  silent! augroup
+    autocmd!
+  augroup end
+
+  let b:two_page_enable = 0
+
+  echom "Two page editing disabled"
+
+endfunction
+
+
 function! s:TwoPageHandleMove()
   if exists('b:left_winid')
 
@@ -71,6 +69,7 @@ function! s:TwoPageHandleMove()
 
   end
 endfunction
+
 
 function! s:TwoPageSyncWindows()
   " Keep windows in sync
