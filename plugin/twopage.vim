@@ -26,7 +26,7 @@ function! EnableTwoPage()
   " Set up autocommand
   silent! augroup
     autocmd!
-    autocmd CursorMoved * :call TwoPageHandleMove()
+    autocmd CursorMoved * :call s:TwoPageHandleMove()
   augroup end
 
   let b:two_page_enable = 1
@@ -35,7 +35,7 @@ function! EnableTwoPage()
 
 endfunction
 
-function! TwoPageHandleMove()
+function! s:TwoPageHandleMove()
   if exists('b:left_winid')
 
     " Determine target
@@ -57,12 +57,12 @@ function! TwoPageHandleMove()
     end
 
     " Update window positions
-    call TwoPageSyncWindows()
+    call s:TwoPageSyncWindows()
 
   end
 endfunction
 
-function! TwoPageSyncWindows()
+function! s:TwoPageSyncWindows()
   " Keep windows in sync
   let offset = (line('w0', b:right_winid) - line('w$', b:left_winid)) - 1
   if (offset < 0)
@@ -81,5 +81,3 @@ function! TwoPageSyncWindows()
   let b:left_top = line('w0', b:left_winid)
   let b:right_top = line('w0', b:right_winid)
 endfunction
-
-echom 'Done'
