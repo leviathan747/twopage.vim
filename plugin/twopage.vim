@@ -33,6 +33,8 @@ function! EnableTwoPage()
     silent! augroup
       autocmd!
       autocmd CursorMoved * :call s:TwoPageHandleMove()
+      exe 'autocmd WinClosed ' . b:left_winid . ' :call DisableTwoPage()'
+      exe 'autocmd WinClosed ' . b:right_winid . ' :call DisableTwoPage()'
     augroup end
 
     let b:two_page_enable = 1
