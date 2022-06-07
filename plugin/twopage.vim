@@ -50,17 +50,13 @@ function! s:TwoPageHandleMove()
     let target_pos = getcurpos()
 
     " Jump to right window
-    if (((winnr('1l') != winnr()) && (winbufnr(winnr('1l')) == winbufnr(winnr()))) && (target_pos[1] >= b:right_top))
-      let left_offset = (line('w0') - b:left_top)
-      exe 'normal! ' . left_offset . '\<c-y>'
-      wincmd l
+    if ((win_getid() == b:left_winid) && (target_pos[1] >= b:right_top))
+      call win_gotoid(b:right_winid)
       call setpos('.', target_pos)
 
     " Jump to left window
-    elseif (((winnr('1h') != winnr()) && (winbufnr(winnr('1h')) == winbufnr(winnr()))) && (target_pos[1] < b:right_top))
-      let right_offset = (b:right_top - line('w0'))
-      exe 'normal! ' . right_offset . '\<c-e>'
-      wincmd h
+    elseif ((win_getid() == b:right_winid) && (target_pos[1] < b:right_top))
+      call win_gotoid(b:left_winid)
       call setpos('.', target_pos)
     end
 
